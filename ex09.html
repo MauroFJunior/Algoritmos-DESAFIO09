@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body{
+        margin: 0;
+        background-color: rgb(107, 89, 95);
+        font-family: monospace;
+        font-weight: 400;
+        font-size: 14px;
+        color: white;
+    }
+
+    .page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 30px;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(67, 55, 59, 0.386);
+        width: 100%;
+        height: 20%;
+    }
+
+    .title span{
+        font-size: 20px;
+        
+    }
+
+    .title .sub {
+        font-size: 12px;
+        margin-bottom: 5vh;
+        font-weight: 100;
+    }
+
+    .container {
+        margin: 8vh;
+        border-radius: 5vh;
+        width: 50%;
+        height: 80vh;
+        background-color: rgba(70, 65, 67, 0.408);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 8px solid rgb(67, 55, 59);
+    }
+
+    .container input {
+        width: 10vh;
+        height: 10vh;
+        font-size: 40px;
+        text-align: center;
+        font-weight: bold;
+        caret-color: transparent;
+        border: 8px solid rgb(67, 55, 59);
+        border-radius: 2vh;
+        background-color: rgb(107, 89, 95);
+        color: white;
+        transition: outline 0.2s ease;
+    }
+
+    .container input:hover {
+        outline: 5px solid white;
+    }
+
+    .container input:focus {
+        outline: 3px solid white;
+    }
+
+    .container button {
+        font-family: monospace;
+        height: 6vh;
+        width: 10vw;
+        background-color: rgb(67, 55, 59);
+        border-radius: 2vh;
+        outline: 5px solid transparent;
+        border: none;
+        border-bottom: 4px solid rgb(40, 35, 36);
+        color: white;
+        transition: outline 0.2s ease, scale 0.3s ease;
+    }
+
+    .container button:hover {
+        outline: 5px solid white;
+        scale: 1.1;
+    }
+
+    #mensagem {
+        height: 10vh;
+    }
+
+    #mensagem .resposta {
+        font-size: 30px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DESAFIO</title>
+</head>
+<body>
+    <div class="page">
+        <div class="container">
+        <div class="title">WE HAVE WORDLE AT HOME!<span class="sub">um jogo de descobrir a palavra secreta feito por Mauro Junior.</span><span id="cta">DIGITE UMA LETRA</span></div>
+        <input oninput="styleInput()" type="text" id="get_char">
+        <button onclick="getAnalise()">Verificar letra</button>
+        <div id="mensagem"></div>
+    </div> 
+    </div>
+</body>
+</html>
+
+<script>
+    var resposta = "exagero"
+    var temp = "exagero"
+
+    var chutesCertos = 0;
+
+    onLoad();
+
+    function onLoad(){
+        mensagem.innerHTML = `Palavra secreta definida! Descubra todos os ${resposta.length} caracteres!`
+    }
+    function styleInput(){
+        get_char.value = get_char.value.toUpperCase();
+        get_char.value = get_char.value.charAt(get_char.value.length - 1);
+    }
+
+    function getAnalise(){
+        var char = get_char.value.toLowerCase();
+
+        get_char.value = '';
+        get_char.focus();
+
+        if ('abcdefghijklmnopqrstuvwxyz'.includes(char.toLowerCase()) && char != '') {
+
+            if (temp.includes(char) && (chutesCertos < resposta.length)) {
+
+                chutesCertos++;
+                mensagem.innerHTML = `O caractere ${char.toUpperCase()} aparece na palavra secreta! Faltam ${resposta.length - chutesCertos} caracteres`;
+                temp = temp.replace(char, '');
+            
+            } else {
+
+                mensagem.innerHTML = `O caractere ${char.toUpperCase()} NÃO aparece na palavra secreta! Faltam ${resposta.length - chutesCertos} caracteres`;
+            
+            } 
+            
+            if (chutesCertos >= resposta.length) {
+                
+                mensagem.innerHTML = `Parabéns, você descobriu todas as letras da palavra secreta... <br> <span class="resposta">${resposta.toUpperCase()}<span>!`;
+            }
+
+        } else {
+            mensagem.innerHTML = `Tem certeza que digitou uma LETRA?`;
+        }
+
+        
+    }
+
+</script>
