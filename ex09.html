@@ -157,8 +157,12 @@
                 mensagem.innerHTML = `Parabéns, você descobriu todas as letras da palavra secreta... <br> <span class="resposta">${resposta.toUpperCase()}<span>!`;
             }
 
-        } else {
+        } else if (chutesCertos < resposta.length){
+
             mensagem.innerHTML = `Tem certeza que digitou uma LETRA?`;
+
+        } else {
+            mensagem.innerHTML = `Parabéns, você descobriu todas as letras da palavra secreta... <br> <span class="resposta">${resposta.toUpperCase()}<span>!`;
         }
 
         
